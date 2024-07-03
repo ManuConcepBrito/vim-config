@@ -23,6 +23,7 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 -- Scrolls up half a page and centers the cursor.
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
+
 -- Searches for the next match and centers the cursor.
 vim.keymap.set("n", "n", "nzzzv")
 
@@ -82,16 +83,37 @@ vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 -- Makes the current file executable.
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
--- Inserts an if error block in Go.
-vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
-
--- Opens the packer.lua configuration file.
-
--- Runs the make_it_rain cellular automaton.
 vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>")
+
 
 -- Sources the current file.
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
+
+-- Go to end of line
+vim.keymap.set("n", "<leader>ee", "$")
+
+-- Go to beginning of line
+vim.keymap.set("n", "<leader>bb", "^")
+
+-- To toggle splits horizontally
+vim.keymap.set({"n", "v", "i"}, "<C-h>", "<cmd> :wincmd h<CR>")
+vim.keymap.set({"n", "v", "i"}, "<C-l>", "<cmd> :wincmd l<CR>")
+-- Toggle splits vertically
+vim.keymap.set({"n", "v", "i"}, "<C-j>", "<cmd> :wincmd j<CR>")
+vim.keymap.set({"n", "v", "i"}, "<C-k>", "<cmd> :wincmd k<CR>")
+
+ -- Diagnostic keymaps
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+--vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+--vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+-- Disable arrows in normal mode, gotta save those wrists
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+
 
