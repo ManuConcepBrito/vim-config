@@ -3,7 +3,7 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("i", "jj", "<esc>")
 -- In visual mode unselect the text by pressing
-vim.keymap.set("v", "jj", "<esc>")
+vim.keymap.set("v", "gg", "<esc>")
 
 -- Binds <C-z> to undo the last change.
 vim.keymap.set("i", "<C-z>", "<cmd>:u<CR>")
