@@ -116,4 +116,12 @@ vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
 vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
+-- Execute macro over selected lines --
+function ExecuteMacroOverVisualRange()
+  local macro = vim.fn.nr2char(vim.fn.getchar())
+  print("Executing macro: " .. macro)
+  vim.cmd("'<,'>normal @" .. macro)
+end
 
+-- Set the keymap using vim.keymap.set
+vim.keymap.set('v', '@', ":<C-u>lua ExecuteMacroOverVisualRange()<CR>", { silent = true })
