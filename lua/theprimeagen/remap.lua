@@ -11,10 +11,10 @@ vim.keymap.set("i", "<C-z>", "<cmd>:u<CR>")
 
 -- Moves selected block down in visual mode and re-selects it.
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-
-
 -- Moves selected block up in visual mode and re-selects it.
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+
 -- Joins the next line to the current one while preserving the cursor position.
 vim.keymap.set("n", "J", "mzJ`z")
 
@@ -47,13 +47,13 @@ end)
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 -- Copies to system clipboard in normal and visual modes.
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 
 -- Copies the current line to system clipboard in normal mode.
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 -- Deletes without affecting the clipboard in normal and visual modes.
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 -- Disables the Q command in normal mode.
 vim.keymap.set("n", "Q", "<nop>")
@@ -98,17 +98,17 @@ vim.keymap.set("n", "<leader>ee", "$")
 vim.keymap.set("n", "<leader>bb", "^")
 
 -- To toggle splits horizontally
-vim.keymap.set({"n", "v", "i"}, "<C-h>", "<cmd> :wincmd h<CR>")
-vim.keymap.set({"n", "v", "i"}, "<C-l>", "<cmd> :wincmd l<CR>")
+vim.keymap.set({ "n", "v", "i" }, "<C-h>", "<cmd> :wincmd h<CR>")
+vim.keymap.set({ "n", "v", "i" }, "<C-l>", "<cmd> :wincmd l<CR>")
 -- Toggle splits vertically
-vim.keymap.set({"n", "v", "i"}, "<C-j>", "<cmd> :wincmd j<CR>")
-vim.keymap.set({"n", "v", "i"}, "<C-k>", "<cmd> :wincmd k<CR>")
+vim.keymap.set({ "n", "v", "i" }, "<C-j>", "<cmd> :wincmd j<CR>")
+vim.keymap.set({ "n", "v", "i" }, "<C-k>", "<cmd> :wincmd k<CR>")
 
- -- Diagnostic keymaps
+-- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 --vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
---vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Disable arrows in normal mode, gotta save those wrists
 vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -118,10 +118,24 @@ vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Execute macro over selected lines --
 function ExecuteMacroOverVisualRange()
-  local macro = vim.fn.nr2char(vim.fn.getchar())
-  print("Executing macro: " .. macro)
-  vim.cmd("'<,'>normal @" .. macro)
+    local macro = vim.fn.nr2char(vim.fn.getchar())
+    print("Executing macro: " .. macro)
+    vim.cmd("'<,'>normal @" .. macro)
 end
 
 -- Set the keymap using vim.keymap.set
 vim.keymap.set('v', '@', ":<C-u>lua ExecuteMacroOverVisualRange()<CR>", { silent = true })
+
+
+-- Remap <Tab> in visual mode to indent the selected code
+vim.api.nvim_set_keymap('v', '<Tab>', '>gv', { noremap = true, silent = true })
+
+-- Remap <Shift-Tab> in visual mode to un-indent the selected code
+vim.api.nvim_set_keymap('v', '<S-Tab>', '<gv', { noremap = true, silent = true })
+-- Remap for telescope diff
+vim.keymap.set("n", "<leader>dF", function()
+    require("telescope").extensions.diff.diff_files({ hidden = true })
+end, { desc = "Compare 2 files" })
+vim.keymap.set("n", "<leader>df", function()
+    require("telescope").extensions.diff.diff_current({ hidden = true })
+end, { desc = "Compare file with current" })
